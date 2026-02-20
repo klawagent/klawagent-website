@@ -57,7 +57,7 @@ a { color: inherit; text-decoration: none; }
   transition: background .2s; white-space: nowrap; flex-shrink: 0;
 }
 .nav-cta:hover { background: #991b1b !important; }
-.nav-mobile-toggle { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; flex-shrink: 0; }
+.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; flex-shrink: 0; padding: 8px; line-height: 0; }
 
 /* ── BUTTONS ── */
 .btn {

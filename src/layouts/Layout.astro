@@ -54,7 +54,13 @@ const fullTitle = title === 'KlawAgent' ? title : `${title} | KlawAgent`;
         <li><a href="/blog">Blog</a></li>
         <li><a href="/#contact" class="nav-cta">BOOK A CALL</a></li>
       </ul>
-      <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
+      <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect y="3" width="22" height="2.5" rx="1.25" fill="#111111"/>
+          <rect y="10" width="22" height="2.5" rx="1.25" fill="#111111"/>
+          <rect y="17" width="22" height="2.5" rx="1.25" fill="#111111"/>
+        </svg>
+      </button>
     </nav>
 
     <slot />
@@ -84,8 +90,12 @@ const fullTitle = title === 'KlawAgent' ? title : `${title} | KlawAgent`;
       const toggle = document.getElementById('nav-toggle');
       const links = document.getElementById('nav-links');
       toggle?.addEventListener('click', () => {
-        links?.classList.toggle('open');
-        if (toggle) toggle.textContent = links?.classList.contains('open') ? '✕' : '☰';
+        const isOpen = links?.classList.toggle('open');
+        if (toggle) {
+          toggle.innerHTML = isOpen
+            ? '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="2" x2="20" y2="20" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="2" x2="2" y2="20" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/></svg>'
+            : '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect y="3" width="22" height="2.5" rx="1.25" fill="#111111"/><rect y="10" width="22" height="2.5" rx="1.25" fill="#111111"/><rect y="17" width="22" height="2.5" rx="1.25" fill="#111111"/></svg>';
+        }
       });
     </script>
   </body>
