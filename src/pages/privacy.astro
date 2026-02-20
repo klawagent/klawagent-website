@@ -1,0 +1,182 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Privacy Policy" description="KlawAgent Privacy Policy — how we handle your data.">
+
+  <style>
+    .hero-band {
+      background: var(--bg-dark);
+      color: var(--bg);
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+    .hero-band .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .hero-band h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero-band .date { font-size: 0.875rem; color: #a09080; }
+
+    .page-wrap {
+      max-width: var(--max-w-text);
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 56px;
+    }
+    .summary-card .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .summary-card p { font-size: 1.05rem; font-style: italic; }
+
+    section { margin-bottom: 52px; }
+    section h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    section h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 24px 0 10px;
+    }
+    section p { margin-bottom: 12px; }
+
+    ul.check-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    ul.check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; }
+    ul.check-list li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    ul.block-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    ul.block-list li { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; font-size: 0.9375rem; }
+
+    .contact-card {
+      background: var(--bg-dark);
+      color: var(--bg);
+      border-radius: 16px;
+      padding: 36px 32px;
+      text-align: center;
+      margin-top: 56px;
+    }
+    .contact-card h2 { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 10px; border: none; padding: 0; color: var(--bg); }
+    .contact-card p { color: #a09080; margin-bottom: 24px; font-size: 0.9375rem; }
+    .contact-card a {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 12px 28px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .contact-card a:hover { background: var(--accent-hover); }
+  </style>
+
+  <div class="hero-band">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p class="date">Last updated: February 19, 2026</p>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="summary-card">
+      <p class="label">The Short Version</p>
+      <p>KlawAgent is a managed service. We handle the infrastructure so you don't have to — and we take your privacy seriously.</p>
+    </div>
+
+    <section>
+      <h2>What We Collect</h2>
+      <h3>On This Website</h3>
+      <ul class="check-list">
+        <li><span><strong>Analytics:</strong> We use privacy-friendly analytics to understand how people use the site — page views and general geographic region (country level). We don't track individual users.</span></li>
+        <li><span><strong>Email:</strong> If you book a call or sign up for updates, we store your email address. You can unsubscribe anytime.</span></li>
+      </ul>
+      <h3>In the KlawAgent Service</h3>
+      <ul class="check-list">
+        <li><span><strong>Account Info:</strong> Name and email to manage your account.</span></li>
+        <li><span><strong>Integration Credentials:</strong> When you connect tools like Gmail, Slack, or ClickUp, we store encrypted credentials solely to operate your agent on your behalf.</span></li>
+        <li><span><strong>Usage Logs:</strong> We maintain operational logs for troubleshooting and service reliability. These are not shared or sold.</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Personal Information</h2>
+      <p>You choose what personal or business information you share with your AI agent. KlawAgent cannot be held responsible for any consequences arising from personal information you voluntarily provide to the service or its connected integrations. Share only what is necessary for your agent to do its job.</p>
+    </section>
+
+    <section>
+      <h2>What We Don't Do</h2>
+      <ul class="check-list">
+        <li>We don't sell your data</li>
+        <li>We don't read your conversations beyond what's needed to operate your agent</li>
+        <li>We don't track you across other websites</li>
+        <li>We don't share your data with third parties except services you explicitly connect</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Third-Party Services</h2>
+      <p>When KlawAgent operates on your behalf, it may interact with services you authorize, including:</p>
+      <ul class="block-list">
+        <li><strong>AI Providers</strong> (Anthropic, OpenAI, etc.) — governed by their privacy policies</li>
+        <li><strong>Messaging Apps</strong> (Slack, Gmail, etc.) — governed by their privacy policies</li>
+        <li><strong>Project Tools</strong> (ClickUp, etc.) — governed by their privacy policies</li>
+      </ul>
+      <p style="margin-top:16px;">We recommend reviewing the privacy policies of any services you connect to KlawAgent.</p>
+    </section>
+
+    <section>
+      <h2>Your Rights</h2>
+      <ul class="check-list">
+        <li>Access any data we hold about you</li>
+        <li>Delete your data from our systems</li>
+        <li>Unsubscribe or cancel your account at any time</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Changes</h2>
+      <p>We may update this policy occasionally. Significant changes will be announced on the website.</p>
+    </section>
+
+    <div class="contact-card">
+      <h2>Questions About Privacy?</h2>
+      <p>We're happy to answer anything. Reach out directly.</p>
+      <a href="mailto:hey@klawagent.ai">hey@klawagent.ai</a>
+    </div>
+
+  </div>
+
+</Layout>

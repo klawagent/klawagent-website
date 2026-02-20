@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+}
+
+const {
+  title,
+  description = 'KlawAgent handles the backend so you can handle business. AI-powered automation, custom agents, and seamless tool connections.',
+  image = '/og-image.jpg',
+  canonicalURL = new URL(Astro.url.pathname, Astro.site),
+} = Astro.props;
+
+const fullTitle = title === 'KlawAgent' ? title : `${title} | KlawAgent`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="KlawAgent" width="36" height="36" />
+        KlawAgent
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/#product">Product</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="https://cal.com/klawagent" class="nav-cta">BOOK A CALL</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle menu">☰</button>
+    </nav>
+
+    <slot />
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="foot-divider"></div>
+        <div class="foot-row">
+          <div class="foot-left">
+            <span class="foot-logo">KlawAgent</span>
+            <span class="foot-copy">© 2026</span>
+          </div>
+          <div class="foot-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/status">Status</a>
+          </div>
+        </div>
+        <div class="foot-ps">
+          <p>PS: We're based in Austin, Texas. Real people. Real support. No overseas call centres.</p>
+          <p>PPS: We actually respond to emails. Try us.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById('nav-toggle');
+      const links = document.getElementById('nav-links');
+      toggle?.addEventListener('click', () => {
+        links?.classList.toggle('open');
+        if (toggle) toggle.textContent = links?.classList.contains('open') ? '✕' : '☰';
+      });
+    </script>
+  </body>
+</html>

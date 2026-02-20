@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Terms of Service" description="KlawAgent Terms of Service — the rules of the road.">
+
+  <style>
+    .hero-band {
+      background: var(--bg-dark);
+      color: var(--bg);
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+    .hero-band .eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
+    .hero-band h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; }
+    .hero-band .date { font-size: 0.875rem; color: #a09080; }
+
+    .page-wrap { max-width: var(--max-w-text); margin: 0 auto; padding: 64px 24px 96px; }
+
+    .summary-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 28px 32px; margin-bottom: 56px; }
+    .summary-card .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+    .summary-card p { font-size: 1.05rem; font-style: italic; }
+
+    section { margin-bottom: 52px; }
+    section h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    section h3 { font-size: 0.875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin: 24px 0 10px; }
+    section p { margin-bottom: 12px; }
+
+    ul.check-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    ul.check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; }
+    ul.check-list li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    ul.block-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    ul.block-list li { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; font-size: 0.9375rem; }
+
+    .warning-card { background: #fff8f0; border: 1px solid #f0d9c0; border-left: 4px solid #d97706; border-radius: 12px; padding: 24px 28px; margin-top: 16px; }
+    .warning-card p { font-size: 0.9375rem; color: #7c4a00; margin: 0; }
+
+    .contact-card { background: var(--bg-dark); color: var(--bg); border-radius: 16px; padding: 36px 32px; text-align: center; margin-top: 56px; }
+    .contact-card h2 { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 10px; border: none; padding: 0; color: var(--bg); }
+    .contact-card p { color: #a09080; margin-bottom: 24px; font-size: 0.9375rem; }
+    .contact-card a { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; border-radius: 999px; padding: 12px 28px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; }
+    .contact-card a:hover { background: var(--accent-hover); }
+  </style>
+
+  <div class="hero-band">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of Service</h1>
+    <p class="date">Last updated: February 19, 2026</p>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="summary-card">
+      <p class="label">The Short Version</p>
+      <p>Use KlawAgent responsibly. The service is provided as-is. You're responsible for how your AI agent is configured and what it does on your behalf.</p>
+    </div>
+
+    <section>
+      <h2>Using KlawAgent</h2>
+      <h3>The Service</h3>
+      <p>KlawAgent is a managed AI agent platform. We deploy, host, and maintain your AI agent so you can focus on your business. By using KlawAgent, you agree to these terms.</p>
+      <h3>This Website</h3>
+      <p>The content on klawagent.ai is provided for informational purposes. We do our best to keep things accurate and up-to-date, but technology moves fast.</p>
+    </section>
+
+    <section>
+      <h2>Your Responsibilities</h2>
+      <p>When using KlawAgent, you agree to:</p>
+      <ul class="check-list">
+        <li>Use the service in compliance with applicable laws</li>
+        <li>Not use it to spam, harass, or harm others</li>
+        <li>Keep your account credentials secure</li>
+        <li>Take responsibility for actions your AI agent takes on your behalf</li>
+        <li>Ensure any integrations you connect are authorized for your use</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Personal Information</h2>
+      <p>You choose what personal or business information you share with your AI agent. KlawAgent cannot be held responsible for any consequences arising from personal information you voluntarily provide to the service or its connected integrations. Share only what is necessary for your agent to do its job.</p>
+    </section>
+
+    <section>
+      <h2>API &amp; Third-Party Costs</h2>
+      <p>KlawAgent uses AI providers like Anthropic and OpenAI to power your agent. Depending on your plan, API usage costs may be included or billed separately. You are responsible for any costs incurred from third-party services you connect.</p>
+      <div class="warning-card">
+        <p>We recommend reviewing the pricing of any AI providers or third-party services connected to your agent to avoid unexpected charges.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Service Warranty</h2>
+      <p>KlawAgent warrants 99% monthly uptime for the core platform. If we fall below that in any given month, you are entitled to a service credit equal to the downtime percentage of your monthly fee. Every plan includes standard customer support — additional support packages with faster response times are available, contact us at <a href="mailto:hey@klawagent.ai" style="color:var(--accent);">hey@klawagent.ai</a> to learn more.</p>
+      <h3>OpenClaw Software</h3>
+      <p>KlawAgent runs on OpenClaw, an open-source framework provided under the MIT License. While we manage and maintain your deployment, the underlying OpenClaw software is provided "as is" without warranty of any kind. We cannot guarantee it will be error-free or uninterrupted in all circumstances. Our service warranty above covers the KlawAgent managed platform — not issues originating from the open-source software itself.</p>
+    </section>
+
+    <section>
+      <h2>Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, KlawAgent is not liable for any damages arising from your use of the service, including but not limited to:</p>
+      <ul class="block-list">
+        <li>Actions taken by your AI agent on your behalf</li>
+        <li>Costs from third-party AI providers or integrations</li>
+        <li>Data loss or security issues arising from third-party services</li>
+        <li>Downtime or service interruptions</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Paid Services</h2>
+      <ul class="check-list">
+        <li>All prices are in USD unless otherwise stated</li>
+        <li>Refunds are available within 30 days, no questions asked</li>
+        <li>Your subscription is for your business use only and is non-transferable</li>
+        <li>We reserve the right to update pricing with reasonable notice</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Changes to These Terms</h2>
+      <p>We may update these terms occasionally. Continued use of the service after changes constitutes acceptance. Significant changes will be announced on the website and via email.</p>
+    </section>
+
+    <div class="contact-card">
+      <h2>Questions About These Terms?</h2>
+      <p>We're happy to clarify anything. Just reach out.</p>
+      <a href="mailto:hey@klawagent.ai">hey@klawagent.ai</a>
+    </div>
+
+  </div>
+
+</Layout>
