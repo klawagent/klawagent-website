@@ -109,24 +109,36 @@ import Layout from '../layouts/Layout.astro';
 .c-ico { width:48px; height:48px; border-radius:50%; background:var(--card); border:1px solid var(--border); box-shadow:0 4px 0 rgba(0,0,0,.06); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
 .c-lbl { font-size:0.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:2px; }
 .c-val { font-size:1rem; font-weight:500; }
-.cal-box { background:var(--card); border:1px solid var(--border); border-radius:28px; box-shadow:0 18px 0 rgba(0,0,0,.10); padding:48px 36px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:420px; text-align:center; position:relative; }
-.cal-sticker { position:absolute; top:-16px; left:50%; transform:translateX(-50%); background:var(--card); border:1px solid var(--border); border-radius:999px; padding:6px 18px; font-size:0.75rem; font-weight:600; white-space:nowrap; box-shadow:0 2px 0 rgba(0,0,0,.06); }
-.cal-title { font-family:var(--serif); font-size:1.3rem; font-weight:700; margin-bottom:6px; }
-.cal-sub { font-size:0.875rem; color:var(--muted); margin-bottom:24px; }
+.cal-box { background:var(--card); border:1px solid var(--border); border-radius:28px; box-shadow:0 18px 0 rgba(0,0,0,.10); padding:28px 20px 0; position:relative; overflow:hidden; }
+.cal-sticker { position:absolute; top:-16px; left:50%; transform:translateX(-50%); background:var(--card); border:1px solid var(--border); border-radius:999px; padding:6px 18px; font-size:0.75rem; font-weight:600; white-space:nowrap; box-shadow:0 2px 0 rgba(0,0,0,.06); z-index:1; }
 
 /* RESPONSIVE */
 @media (max-width:960px) {
   .hero,.two-col,.contact-grid { grid-template-columns:1fr; }
   .two-col.flip .img-col { order:0; }
   .hero { padding:40px 24px 60px; min-height:auto; }
+  .hero-card { aspect-ratio:4/3; }
   .plat-card { grid-template-columns:1fr; gap:32px; padding:28px 24px; }
   .why-grid,.pkg-row,.task-grid,.inc-list { grid-template-columns:1fr 1fr; }
   .pills { grid-template-columns:1fr; }
   .api-s { padding:64px 24px; }
+  .total-nums { flex-wrap:wrap; justify-content:center; }
+  .contact-grid { gap:48px; }
 }
-@media (max-width:600px) {
+@media (max-width:640px) {
   .why-grid,.pkg-row,.task-grid { grid-template-columns:1fr; }
   .inc-list { grid-template-columns:1fr; }
+  .two-col { gap:40px; }
+  .hero h1 { font-size:2.6rem; }
+  .plat-card { padding:24px 20px; }
+  .pkg-row { gap:12px; }
+  .api-logos { gap:8px; }
+  .api-logo { min-width:72px; padding:10px 12px; }
+  .task-grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:420px) {
+  .task-grid { grid-template-columns:1fr; }
+  .pills { grid-template-columns:1fr; }
 }
 </style>
 
@@ -136,7 +148,7 @@ import Layout from '../layouts/Layout.astro';
     <div>
       <h1>Your AI Employee,<br/>Managed</h1>
       <p>KlawAgent handles the backend so you can handle business.</p>
-      <a href="https://cal.com/klawagent" class="btn btn-red">BOOK A 15-MIN CALL &nbsp;→</a>
+      <a href="https://cal.com/welcomein/meeting" class="btn btn-red">BOOK A 15-MIN CALL &nbsp;→</a>
     </div>
     <div class="hero-card">
       <img src="/dilbert.png" alt="Your AI employee at work" width="640" height="500" />
@@ -381,7 +393,7 @@ import Layout from '../layouts/Layout.astro';
         <span class="total-monthly">$147<span class="total-mo">/mo</span></span>
       </div>
       <div class="total-sub">One-time setup · then flat monthly</div>
-      <a href="https://cal.com/klawagent" class="btn btn-red">BOOK A CALL TO GET STARTED</a>
+      <a href="https://cal.com/welcomein/meeting" class="btn btn-red">BOOK A CALL TO GET STARTED</a>
     </div>
     <p class="price-note">* AI API usage costs (OpenAI, Anthropic, etc.) are not included and billed separately based on usage.</p>
   </div>
@@ -420,10 +432,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
       <div class="cal-box">
         <div class="cal-sticker">Real people. Real support.</div>
-        <div style="font-size:2.2rem;margin-bottom:10px">📅</div>
-        <div class="cal-title">Book An Appointment</div>
-        <div class="cal-sub">15-min intro call · Cal.com</div>
-        <a href="https://cal.com/klawagent" class="btn btn-red">BOOK A CALL &nbsp;→</a>
+        <div id="cal-embed" style="width:100%;min-height:500px"></div>
       </div>
     </div>
   </div>
@@ -448,6 +457,25 @@ import Layout from '../layouts/Layout.astro';
       const el = document.getElementById('total-pkg');
       if (el && price) el.textContent = '$' + price;
     });
+  });
+</script>
+
+<script type="text/javascript">
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "meeting", { origin: "https://cal.com" });
+  Cal.ns.meeting("inline", {
+    elementOrSelector: "#cal-embed",
+    calLink: "welcomein/meeting",
+    layout: "month_view",
+  });
+  Cal.ns.meeting("ui", {
+    styles: { branding: { brandColor: "#b91c1c" } },
+    hideEventTypeDetails: false,
+    layout: "month_view",
   });
 </script>
 
