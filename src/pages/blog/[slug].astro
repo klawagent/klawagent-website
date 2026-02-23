@@ -17,6 +17,12 @@ const { Content } = await post.render();
 <Layout title={post.data.title} description={post.data.description}>
 
   <style>
+    .hero-image {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+    }
+
     .hero-band {
       background: var(--bg-dark);
       color: var(--bg);
@@ -24,28 +30,29 @@ const { Content } = await post.render();
       text-align: center;
     }
     .hero-band .eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
-    .hero-band h1 { font-family: var(--font-serif); font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; max-width: 760px; margin: 0 auto 20px; }
+    .hero-band h1 { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; max-width: 760px; margin: 0 auto 20px; }
     .hero-band .meta { font-size: 0.875rem; color: #a09080; }
 
     .post-wrap {
-      max-width: var(--max-w-text);
+      max-width: var(--max-w-text, 760px);
       margin: 0 auto;
       padding: 64px 24px 96px;
     }
 
-    /* Prose styles */
-    .prose h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-    .prose h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; margin: 28px 0 12px; }
-    .prose p { margin-bottom: 20px; font-size: 1.0625rem; line-height: 1.8; }
-    .prose ul, .prose ol { margin: 0 0 20px 24px; }
-    .prose li { margin-bottom: 8px; font-size: 1.0625rem; line-height: 1.7; }
-    .prose strong { font-weight: 600; }
-    .prose a { color: var(--accent); }
-    .prose a:hover { text-decoration: underline; }
-    .prose blockquote { border-left: 4px solid var(--accent); padding: 12px 20px; margin: 24px 0; background: var(--bg-card); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-muted); }
-    .prose code { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.875em; }
-    .prose pre { background: var(--bg-dark); border-radius: 12px; padding: 24px; overflow-x: auto; margin: 24px 0; }
-    .prose pre code { background: none; border: none; padding: 0; color: var(--bg); font-size: 0.9rem; }
+    /* Prose styles — :global() needed because <Content /> renders markdown
+       without Astro's scoped data attributes */
+    .prose :global(h2) { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; margin: 50px 0 15px; }
+    .prose :global(h3) { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; margin: 28px 0 12px; }
+    .prose :global(p) { margin-bottom: 15px; font-size: 1.0625rem; line-height: 1.8; }
+    .prose :global(ul), .prose :global(ol) { margin: 0 0 15px 50px; }
+    .prose :global(li) { margin-bottom: 8px; font-size: 1.0625rem; line-height: 1.7; }
+    .prose :global(strong) { font-weight: 600; }
+    .prose :global(a) { color: var(--accent); }
+    .prose :global(a:hover) { text-decoration: underline; }
+    .prose :global(blockquote) { border-left: 4px solid var(--accent); padding: 12px 20px; margin: 24px 0; background: var(--bg-card); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-muted); }
+    .prose :global(code) { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-size: 0.875em; }
+    .prose :global(pre) { background: var(--bg-dark); border-radius: 12px; padding: 24px; overflow-x: auto; margin: 24px 0; }
+    .prose :global(pre code) { background: none; border: none; padding: 0; color: var(--bg); font-size: 0.9rem; }
 
     .back-link {
       display: inline-flex;
@@ -59,6 +66,8 @@ const { Content } = await post.render();
     }
     .back-link:hover { text-decoration: underline; }
   </style>
+
+  <img src={post.data.image || '/office_lobster.png'} alt={post.data.title} class="hero-image" />
 
   <div class="hero-band">
     <p class="eyebrow">Blog</p>

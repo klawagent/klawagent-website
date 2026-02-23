@@ -6,7 +6,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<Layout title="Blog" description="Insights on AI automation, business productivity, and the KlawAgent platform.">
+<Layout title="OpenClaw Guide" description="Get insights on OpenClaw, AI automation, business productivity, and the KlawAgent platform.">
 
   <style>
     .hero-band {
@@ -16,7 +16,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       text-align: center;
     }
     .hero-band .eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
-    .hero-band h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15; }
+    .hero-band h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15; }
 
     .page-wrap { max-width: var(--max-w); margin: 0 auto; padding: 64px 32px 96px; }
 
@@ -30,17 +30,32 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 32px;
+      padding: 0;
       text-decoration: none;
       color: var(--text);
       transition: border-color 0.2s, transform 0.2s;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .post-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
+    }
+
+    .post-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-card-body {
+      padding: 24px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .post-date {
@@ -52,7 +67,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     }
 
     .post-card h2 {
-      font-family: var(--font-serif);
+      font-family: var(--serif);
       font-size: 1.25rem;
       font-weight: 700;
       margin-bottom: 12px;
@@ -81,7 +96,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     }
 
     .empty-state h2 {
-      font-family: var(--font-serif);
+      font-family: var(--serif);
       font-size: 1.75rem;
       margin-bottom: 12px;
       color: var(--text);
@@ -90,7 +105,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
   <div class="hero-band">
     <p class="eyebrow">Knowledge Base</p>
-    <h1>The KlawAgent Blog</h1>
+    <h1>Guide to OpenClaw</h1>
   </div>
 
   <div class="page-wrap">
@@ -103,10 +118,13 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       <div class="posts-grid">
         {posts.map(post => (
           <a href={`/blog/${post.slug}`} class="post-card">
-            <p class="post-date">{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-            <h2>{post.data.title}</h2>
-            <p>{post.data.description}</p>
-            <span class="post-link">Read More →</span>
+            <img src={post.data.image || '/office_lobster.png'} alt={post.data.title} />
+            <div class="post-card-body">
+              <p class="post-date">{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.description}</p>
+              <span class="post-link">Read More →</span>
+            </div>
           </a>
         ))}
       </div>
