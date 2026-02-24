@@ -26,8 +26,11 @@
     </div>
     
     <div class="result-card klawagent-cost">
-      <div class="result-label">KlawAgent Cost per Month</div>
-      <div class="result-value">$147</div>
+      <div class="result-label">KlawAgent Total Cost</div>
+      <div class="result-value" id="klawagent-total">$272</div>
+      <div class="cost-breakdown">
+        <small>$147 platform + $125 API</small>
+      </div>
     </div>
     
     <div class="result-card savings">
@@ -42,12 +45,14 @@
   </div>
   
   <div class="calc-benefits">
-    <h4>Plus, KlawAgent works 24/7/365:</h4>
+    <h4>Plus, KlawAgent works 24/7/365 (not just 20 hours):</h4>
     <div class="benefit-grid">
-      <div class="benefit">⏰ No sick days</div>
-      <div class="benefit">🔄 No overtime costs</div>
-      <div class="benefit">🎯 Works while you sleep</div>
-      <div class="benefit">📈 Scales instantly</div>
+      <div class="benefit">⏰ No sick days or vacations</div>
+      <div class="benefit">🌙 Works nights and weekends</div>
+      <div class="benefit">⚡ Instant responses (no delays)</div>
+      <div class="benefit">📈 Handles unlimited volume</div>
+      <div class="benefit">🎯 Never needs training or management</div>
+      <div class="benefit">🔄 Perfect consistency every time</div>
     </div>
   </div>
   
@@ -158,6 +163,13 @@
     color: var(--accent);
   }
   
+  .cost-breakdown {
+    margin-top: 4px;
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  
   .savings .result-value,
   .yearly .result-value {
     color: #16a34a;
@@ -232,13 +244,16 @@
     
     // VA costs (assuming 4.33 weeks per month average)
     const vaMonthlyCost = Math.round(vaHours * vaRate * 4.33);
-    const klawagentMonthlyCost = 147;
+    const klawagentPlatformCost = 147;
+    const klawagentAPICost = 125;
+    const klawagentTotalCost = klawagentPlatformCost + klawagentAPICost;
     
-    const monthlySavings = vaMonthlyCost - klawagentMonthlyCost;
+    const monthlySavings = vaMonthlyCost - klawagentTotalCost;
     const yearlySavings = monthlySavings * 12;
     
     // Update displays
     document.getElementById('va-monthly').textContent = `$${vaMonthlyCost.toLocaleString()}`;
+    document.getElementById('klawagent-total').textContent = `$${klawagentTotalCost}`;
     document.getElementById('monthly-savings').textContent = `$${Math.max(0, monthlySavings).toLocaleString()}`;
     document.getElementById('yearly-savings').textContent = `$${Math.max(0, yearlySavings).toLocaleString()}`;
     document.getElementById('cta-savings').textContent = Math.max(0, yearlySavings).toLocaleString();

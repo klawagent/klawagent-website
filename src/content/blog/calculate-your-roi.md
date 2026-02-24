@@ -30,8 +30,8 @@ Instead of paying for human hours, you're paying for outcomes. KlawAgent works 2
 
 **Example calculation:**
 - 20 hours/week × $15/hour × 4.33 weeks = **$1,300/month**
-- KlawAgent cost = **$147/month**  
-- **Your savings: $1,153/month ($13,836/year)**
+- KlawAgent total cost = **$272/month** ($147 platform + $125 AI usage)  
+- **Your savings: $1,028/month ($12,336/year)**
 
 But here's what makes KlawAgent different:
 - **Works 24/7** — No overtime, holidays, or sick days
