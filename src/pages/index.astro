@@ -1,5 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { 
+  Mail, MessageCircle, Link, Database, Lock, Zap, Users, TrendingUp, Shield, RefreshCw,
+  Bot, Archive, Phone, FileCheck, Brain, Home, Infinity, Check
+} from '@lucide/astro';
 ---
 
 <Layout title="KlawAgent" description="Your AI Employee, Managed. KlawAgent handles the backend so you can handle business." structuredDataType="Organization">
@@ -22,9 +26,11 @@ import Layout from '../layouts/Layout.astro';
 .img-col img { width:100%; height:auto; display:block; }
 .icon-row { display:flex; gap:10px; margin:0 0 28px; }
 .i-circle { width:44px; height:44px; border-radius:50%; background:var(--card); border:1px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+.i-circle svg { color:var(--accent); }
 .pills { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .pill { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border-light); border-radius:999px; padding:11px 16px; font-size:0.85rem; font-weight:500; box-shadow:0 2px 0 rgba(0,0,0,.05); }
 .pill-ico { width:28px; height:28px; border-radius:50%; background:var(--bg); border:1px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-size:0.8rem; flex-shrink:0; }
+.pill-ico svg { color:var(--accent); }
 
 /* TEAM */
 .team-s { text-align:center; }
@@ -33,6 +39,7 @@ import Layout from '../layouts/Layout.astro';
 .task-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 .task-item { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border-light); border-radius:999px; padding:14px 20px; font-size:0.875rem; box-shadow:0 2px 0 rgba(0,0,0,.05); }
 .task-check { width:24px; height:24px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem; flex-shrink:0; }
+.task-check svg { color:#fff; }
 
 /* API DARK */
 .api-s { background:#111111; color:#fff; padding:96px 48px; text-align:center; }
@@ -53,7 +60,7 @@ import Layout from '../layouts/Layout.astro';
 .why-sub { color:var(--muted); font-size:1rem; max-width:580px; margin:0 auto 48px; }
 .why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
 .why-card { background:var(--card); border:1px solid var(--border-light); border-radius:20px; padding:28px; text-align:left; box-shadow:0 4px 0 rgba(0,0,0,.05); }
-.why-card .ico { font-size:1.6rem; margin-bottom:14px; }
+.why-card .ico { font-size:1.6rem; margin-bottom:14px; color:var(--accent); }
 .why-card h3 { font-size:1.05rem; margin-bottom:8px; }
 .why-card p { font-size:0.875rem; color:var(--muted); line-height:1.6; }
 .why-note { text-align:center; color:var(--muted); font-size:0.875rem; margin-top:32px; }
@@ -179,10 +186,10 @@ import Layout from '../layouts/Layout.astro';
         <h2>What we actually do</h2>
         <p>We connect the tools you already use — email, Slack, CRM, social, and custom software — so your AI employee can handle tasks, manage workflows, and keep things moving without the busywork.</p>
         <div class="icon-row">
-          <div class="i-circle">📧</div>
-          <div class="i-circle">💬</div>
-          <div class="i-circle">🔗</div>
-          <div class="i-circle">🗄️</div>
+          <div class="i-circle"><Mail size={20} /></div>
+          <div class="i-circle"><MessageCircle size={20} /></div>
+          <div class="i-circle"><Link size={20} /></div>
+          <div class="i-circle"><Database size={20} /></div>
         </div>
         <a href="#features" class="btn btn-red">EXPLORE INTEGRATIONS &nbsp;→</a>
       </div>
@@ -216,14 +223,14 @@ import Layout from '../layouts/Layout.astro';
         <h2>We've got your back</h2>
         <p>From security to strategy, we're there to make sure you're a success.</p>
         <div class="pills">
-          <div class="pill"><div class="pill-ico">🤖</div>15+ SubAgents</div>
-          <div class="pill"><div class="pill-ico">⚡</div>20+ Skills Ready to Deploy</div>
-          <div class="pill"><div class="pill-ico">💾</div>Daily Backups</div>
-          <div class="pill"><div class="pill-ico">🔒</div>Private VPS</div>
-          <div class="pill"><div class="pill-ico">📞</div>Weekly Strategy Calls</div>
-          <div class="pill"><div class="pill-ico">📋</div>Full Audit Logs</div>
-          <div class="pill"><div class="pill-ico">🔄</div>Automatic Updates</div>
-          <div class="pill"><div class="pill-ico">🧠</div>Model Optimizations</div>
+          <div class="pill"><div class="pill-ico"><Bot size={14} /></div>15+ SubAgents</div>
+          <div class="pill"><div class="pill-ico"><Zap size={14} /></div>20+ Skills Ready to Deploy</div>
+          <div class="pill"><div class="pill-ico"><Archive size={14} /></div>Daily Backups</div>
+          <div class="pill"><div class="pill-ico"><Lock size={14} /></div>Private VPS</div>
+          <div class="pill"><div class="pill-ico"><Phone size={14} /></div>Weekly Strategy Calls</div>
+          <div class="pill"><div class="pill-ico"><FileCheck size={14} /></div>Full Audit Logs</div>
+          <div class="pill"><div class="pill-ico"><RefreshCw size={14} /></div>Automatic Updates</div>
+          <div class="pill"><div class="pill-ico"><Brain size={14} /></div>Model Optimizations</div>
         </div>
       </div>
       <div class="img-col">
@@ -239,27 +246,27 @@ import Layout from '../layouts/Layout.astro';
     <h2>Your team has better things to do</h2>
     <p class="team-sub">KlawAgent handles the repetitive work so your team can focus on what actually grows the business — whether you're an agency, a real estate team, an e-commerce store, or anything in between.</p>
     <div class="task-grid">
-      <div class="task-item"><div class="task-check">✓</div>Follow up with leads automatically after a form fill</div>
-      <div class="task-item"><div class="task-check">✓</div>Send personalised cold outreach at scale</div>
-      <div class="task-item"><div class="task-check">✓</div>Update your CRM after every call or email</div>
-      <div class="task-item"><div class="task-check">✓</div>Triage and respond to support tickets</div>
-      <div class="task-item"><div class="task-check">✓</div>Onboard new clients with automated document requests</div>
-      <div class="task-item"><div class="task-check">✓</div>Generate weekly reports from your data</div>
-      <div class="task-item"><div class="task-check">✓</div>Schedule and post content across channels</div>
-      <div class="task-item"><div class="task-check">✓</div>Repurpose long-form content into social posts</div>
-      <div class="task-item"><div class="task-check">✓</div>Monitor brand mentions and flag them for review</div>
-      <div class="task-item"><div class="task-check">✓</div>Chase unpaid invoices</div>
-      <div class="task-item"><div class="task-check">✓</div>Extract data from receipts and log expenses</div>
-      <div class="task-item"><div class="task-check">✓</div>Summarise contracts and flag key clauses</div>
-      <div class="task-item"><div class="task-check">✓</div>Instant lead follow-up the moment someone enquires</div>
-      <div class="task-item"><div class="task-check">✓</div>Send showing reminders and property updates</div>
-      <div class="task-item"><div class="task-check">✓</div>Pull together market snapshots for clients</div>
-      <div class="task-item"><div class="task-check">✓</div>Reply to customer service questions 24/7</div>
-      <div class="task-item"><div class="task-check">✓</div>Send order updates and shipping notifications</div>
-      <div class="task-item"><div class="task-check">✓</div>Write product descriptions in bulk</div>
-      <div class="task-item"><div class="task-check">✓</div>Automate client reporting every Monday</div>
-      <div class="task-item"><div class="task-check">✓</div>Brief writers with AI-generated outlines</div>
-      <div class="task-item"><div class="task-check">✓</div>Manage campaign performance alerts</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Follow up with leads automatically after a form fill</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Send personalised cold outreach at scale</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Update your CRM after every call or email</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Triage and respond to support tickets</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Onboard new clients with automated document requests</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Generate weekly reports from your data</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Schedule and post content across channels</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Repurpose long-form content into social posts</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Monitor brand mentions and flag them for review</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Chase unpaid invoices</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Extract data from receipts and log expenses</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Summarise contracts and flag key clauses</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Instant lead follow-up the moment someone enquires</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Send showing reminders and property updates</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Pull together market snapshots for clients</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Reply to customer service questions 24/7</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Send order updates and shipping notifications</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Write product descriptions in bulk</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Automate client reporting every Monday</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Brief writers with AI-generated outlines</div>
+      <div class="task-item"><div class="task-check"><Check size={12} /></div>Manage campaign performance alerts</div>
     </div>
   </div>
 </section>
@@ -301,12 +308,12 @@ import Layout from '../layouts/Layout.astro';
     <h2>Why OpenClaw?</h2>
     <p class="why-sub">Most AI tools rent you access to their platform. OpenClaw runs on your infrastructure, uses your keys, and works for you — not the platform.</p>
     <div class="why-grid">
-      <div class="why-card"><div class="ico">🔒</div><h3>Your Data Stays Yours</h3><p>Nothing is stored on our servers. Your conversations, workflows, and business data live on your private server — and only yours.</p></div>
-      <div class="why-card"><div class="ico">🔄</div><h3>Never Locked Into One AI</h3><p>Switch between Claude, GPT-4, Gemini, MiniMax and more without rebuilding anything. If a better model comes out tomorrow, you can use it.</p></div>
-      <div class="why-card"><div class="ico">🏠</div><h3>You Own the Infrastructure</h3><p>Your agents run on a dedicated server — not a shared platform. If you ever leave, your setup goes with you. No lock-in, ever.</p></div>
-      <div class="why-card"><div class="ico">🛡️</div><h3>Privacy by Design</h3><p>Your data never trains someone else's model. What happens in your agent stays in your agent.</p></div>
-      <div class="why-card"><div class="ico">💸</div><h3>Pay for What You Use</h3><p>No per-seat pricing. No per-action charges. One flat monthly rate, plus only the API usage you actually consume.</p></div>
-      <div class="why-card"><div class="ico">🔍</div><h3>No Black Box</h3><p>OpenClaw is open source. You can see exactly what your agents are doing and why. Full transparency, full control.</p></div>
+      <div class="why-card"><div class="ico"><Lock size={24} /></div><h3>Your Data Stays Yours</h3><p>Nothing is stored on our servers. Your conversations, workflows, and business data live on your private server — and only yours.</p></div>
+      <div class="why-card"><div class="ico"><RefreshCw size={24} /></div><h3>Never Locked Into One AI</h3><p>Switch between Claude, GPT-4, Gemini, MiniMax and more without rebuilding anything. If a better model comes out tomorrow, you can use it.</p></div>
+      <div class="why-card"><div class="ico"><Home size={24} /></div><h3>You Own the Infrastructure</h3><p>Your agents run on a dedicated server — not a shared platform. If you ever leave, your setup goes with you. No lock-in, ever.</p></div>
+      <div class="why-card"><div class="ico"><Shield size={24} /></div><h3>Privacy by Design</h3><p>Your data never trains someone else's model. What happens in your agent stays in your agent.</p></div>
+      <div class="why-card"><div class="ico"><TrendingUp size={24} /></div><h3>Pay for What You Use</h3><p>No per-seat pricing. No per-action charges. One flat monthly rate, plus only the API usage you actually consume.</p></div>
+      <div class="why-card"><div class="ico"><Users size={24} /></div><h3>No Black Box</h3><p>OpenClaw is open source. You can see exactly what your agents are doing and why. Full transparency, full control.</p></div>
     </div>
     <p class="why-note">OpenClaw is the open-source agent framework powering every KlawAgent deployment.</p>
   </div>
