@@ -7,8 +7,6 @@ image: /blog-images/roi-calculator.png
 draft: false
 ---
 
-import ROICalculator from '../../components/ROICalculator.astro';
-
 Most businesses hire virtual assistants thinking they're getting a deal. $15-25/hour sounds reasonable, right?
 
 But when you add up the real costs — hours, sick days, training time, management overhead — the numbers tell a different story.
@@ -26,7 +24,20 @@ A typical VA working 20 hours per week at $15/hour costs you $1,300 per month. B
 
 Instead of paying for human hours, you're paying for outcomes. KlawAgent works 24/7, never needs training, and scales instantly when you need more done.
 
-<ROICalculator />
+## Calculate Your Savings
+
+**Try our interactive calculator:** [Calculate your exact savings →](/roi-calculator)
+
+**Example calculation:**
+- 20 hours/week × $15/hour × 4.33 weeks = **$1,300/month**
+- KlawAgent cost = **$147/month**  
+- **Your savings: $1,153/month ($13,836/year)**
+
+But here's what makes KlawAgent different:
+- **Works 24/7** — No overtime, holidays, or sick days
+- **Scales instantly** — Handle 10x more tasks at the same cost
+- **Never needs training** — Learns your business automatically
+- **Perfect consistency** — Same quality every single time
 
 ## What Those Savings Actually Mean
 

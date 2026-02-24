@@ -42,4 +42,10 @@
     <priority>0.5</priority>
     <lastmod>2026-02-24</lastmod>
   </url>
+  <url>
+    <loc>https://klawagent.ai/roi-calculator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-02-24</lastmod>
+  </url>
 </urlset>

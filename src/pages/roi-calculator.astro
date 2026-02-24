@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ROICalculator from '../components/ROICalculator.astro';
+---
+
+<Layout title="ROI Calculator - KlawAgent vs Virtual Assistant" description="Calculate how much you could save by switching from a virtual assistant to KlawAgent. Interactive calculator with real-time results.">
+
+<style>
+  .calculator-page {
+    padding: 60px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .calculator-page h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 16px;
+  }
+  
+  .calculator-page .subtitle {
+    font-size: 1.125rem;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="wrap">
+  <div class="calculator-page">
+    <a href="/blog/" class="back-link">← Back to Blog</a>
+    <h1>ROI Calculator</h1>
+    <p class="subtitle">See exactly how much you could save by switching from a traditional virtual assistant to KlawAgent</p>
+    
+    <ROICalculator />
+    
+    <p style="margin-top: 40px; color: var(--muted); font-size: 0.9rem;">
+      Want to see it in action? <a href="/#contact" style="color: var(--accent); font-weight: 600;">Book a 15-minute demo call</a>
+    </p>
+  </div>
+</div>
+
+</Layout>
