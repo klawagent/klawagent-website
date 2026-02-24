@@ -95,7 +95,7 @@ import { DollarSign, Clock, Zap, BarChart3, Shield, RefreshCw } from '@lucide/as
   </div>
   
   <div class="calc-cta">
-    <a href="#contact" class="calc-btn">Book a Call - Save $<span id="cta-savings">13,836</span>/Year</a>
+    <a href="#contact" class="calc-btn" id="cta-button">Book a Call - Save $13,836/Year</a>
   </div>
 </div>
 
@@ -339,7 +339,9 @@ import { DollarSign, Clock, Zap, BarChart3, Shield, RefreshCw } from '@lucide/as
     document.getElementById('klawagent-total').textContent = `$${klawagentTotalCost}`;
     document.getElementById('monthly-savings').textContent = `$${Math.max(0, monthlySavings).toLocaleString()}`;
     document.getElementById('yearly-savings').textContent = `$${Math.max(0, yearlySavings).toLocaleString()}`;
-    document.getElementById('cta-savings').textContent = Math.max(0, yearlySavings).toLocaleString();
+    const ctaButton = document.getElementById('cta-button');
+    const savingsAmount = Math.max(0, yearlySavings).toLocaleString();
+    ctaButton.textContent = `Book a Call - Save $${savingsAmount}/Year`;
     
     // Update API breakdown text based on hours
     const apiBreakdown = document.getElementById('api-breakdown');
