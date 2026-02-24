@@ -25,11 +25,27 @@
       <div class="result-value" id="va-monthly">$1,300</div>
     </div>
     
-    <div class="result-card klawagent-cost">
+    <div class="result-card platform-cost">
+      <div class="result-label">KlawAgent Platform</div>
+      <div class="result-value">$147</div>
+      <div class="cost-breakdown">
+        <small>Fixed monthly fee</small>
+      </div>
+    </div>
+    
+    <div class="result-card api-cost">
+      <div class="result-label">Estimated API Usage</div>
+      <div class="result-value" id="api-cost">$125</div>
+      <div class="cost-breakdown">
+        <small id="api-breakdown">Based on equivalent workload</small>
+      </div>
+    </div>
+    
+    <div class="result-card klawagent-total">
       <div class="result-label">KlawAgent Total Cost</div>
       <div class="result-value" id="klawagent-total">$272</div>
       <div class="cost-breakdown">
-        <small>$147 platform + $125 API</small>
+        <small>Platform + API usage</small>
       </div>
     </div>
     
@@ -126,7 +142,7 @@
   
   .calc-results {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-bottom: 28px;
   }
@@ -159,7 +175,15 @@
     color: #dc2626;
   }
   
-  .klawagent-cost .result-value {
+  .platform-cost .result-value {
+    color: var(--accent);
+  }
+  
+  .api-cost .result-value {
+    color: #f59e0b;
+  }
+  
+  .klawagent-total .result-value {
     color: var(--accent);
   }
   
@@ -224,6 +248,12 @@
     box-shadow: 0 6px 20px rgba(185, 28, 28, 0.3);
   }
   
+  @media (max-width: 960px) {
+    .calc-results {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
   @media (max-width: 640px) {
     .calc-inputs,
     .calc-results,
@@ -245,7 +275,20 @@
     // VA costs (assuming 4.33 weeks per month average)
     const vaMonthlyCost = Math.round(vaHours * vaRate * 4.33);
     const klawagentPlatformCost = 147;
-    const klawagentAPICost = 125;
+    
+    // API cost scaling based on VA hours (more hours = more AI usage)
+    // Base: $50 for 10 hours, scales up with diminishing returns
+    let klawagentAPICost;
+    if (vaHours <= 10) {
+      klawagentAPICost = Math.round(vaHours * 5); // $5 per hour equivalent
+    } else if (vaHours <= 25) {
+      klawagentAPICost = 50 + Math.round((vaHours - 10) * 4); // $4 per additional hour
+    } else if (vaHours <= 40) {
+      klawagentAPICost = 110 + Math.round((vaHours - 25) * 3); // $3 per additional hour
+    } else {
+      klawagentAPICost = 155 + Math.round((vaHours - 40) * 2); // $2 per additional hour (very efficient at scale)
+    }
+    
     const klawagentTotalCost = klawagentPlatformCost + klawagentAPICost;
     
     const monthlySavings = vaMonthlyCost - klawagentTotalCost;
@@ -253,10 +296,21 @@
     
     // Update displays
     document.getElementById('va-monthly').textContent = `$${vaMonthlyCost.toLocaleString()}`;
+    document.getElementById('api-cost').textContent = `$${klawagentAPICost}`;
     document.getElementById('klawagent-total').textContent = `$${klawagentTotalCost}`;
     document.getElementById('monthly-savings').textContent = `$${Math.max(0, monthlySavings).toLocaleString()}`;
     document.getElementById('yearly-savings').textContent = `$${Math.max(0, yearlySavings).toLocaleString()}`;
     document.getElementById('cta-savings').textContent = Math.max(0, yearlySavings).toLocaleString();
+    
+    // Update API breakdown text based on hours
+    const apiBreakdown = document.getElementById('api-breakdown');
+    if (vaHours <= 15) {
+      apiBreakdown.textContent = 'Light usage - basic automation';
+    } else if (vaHours <= 30) {
+      apiBreakdown.textContent = 'Moderate usage - active automation';
+    } else {
+      apiBreakdown.textContent = 'Heavy usage - full business automation';
+    }
     
     // Color coding for savings
     const savingsElements = [
