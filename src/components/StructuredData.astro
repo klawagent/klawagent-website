@@ -1,0 +1,88 @@
+---
+interface Props {
+  type?: 'Organization' | 'WebPage' | 'Article' | 'BlogPosting';
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
+}
+
+const {
+  type = 'Organization',
+  title,
+  description,
+  url = Astro.site,
+  image,
+  datePublished,
+  dateModified,
+  author,
+} = Astro.props;
+
+let structuredData: any = {
+  '@context': 'https://schema.org',
+  '@type': type,
+};
+
+if (type === 'Organization') {
+  structuredData = {
+    ...structuredData,
+    name: 'KlawAgent',
+    description: 'KlawAgent handles the backend so you can handle business. AI-powered automation, custom agents, and seamless tool connections.',
+    url: 'https://klawagent.ai',
+    logo: 'https://klawagent.ai/logo.png',
+    foundingDate: '2024',
+    founder: {
+      '@type': 'Person',
+      name: 'Aaron'
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      email: 'hello@klawagent.ai'
+    },
+    sameAs: [
+      'https://twitter.com/klawagent'
+    ]
+  };
+} else if (type === 'WebPage') {
+  structuredData = {
+    ...structuredData,
+    name: title,
+    description: description,
+    url: url,
+    image: image && new URL(image, Astro.site),
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'KlawAgent',
+      url: 'https://klawagent.ai'
+    }
+  };
+} else if (type === 'Article' || type === 'BlogPosting') {
+  structuredData = {
+    ...structuredData,
+    headline: title,
+    description: description,
+    image: image && new URL(image, Astro.site),
+    url: url,
+    datePublished: datePublished,
+    dateModified: dateModified || datePublished,
+    author: {
+      '@type': 'Organization',
+      name: author || 'KlawAgent Team'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'KlawAgent',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://klawagent.ai/logo.png'
+      }
+    }
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

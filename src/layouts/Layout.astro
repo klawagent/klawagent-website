@@ -1,11 +1,17 @@
 ---
 import '../styles/global.css';
+import StructuredData from '../components/StructuredData.astro';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
   canonicalURL?: string;
+  noIndex?: boolean;
+  structuredDataType?: 'Organization' | 'WebPage' | 'Article' | 'BlogPosting';
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
 }
 
 const {
@@ -13,9 +19,15 @@ const {
   description = 'KlawAgent handles the backend so you can handle business. AI-powered automation, custom agents, and seamless tool connections.',
   image = '/og-image.jpg',
   canonicalURL = new URL(Astro.url.pathname, Astro.site),
+  noIndex = false,
+  structuredDataType = 'WebPage',
+  datePublished,
+  dateModified,
+  author,
 } = Astro.props;
 
 const fullTitle = title === 'KlawAgent' ? title : `${title} | KlawAgent`;
+const robotsContent = noIndex ? 'noindex, nofollow' : 'index, follow';
 ---
 
 <!doctype html>
@@ -23,22 +35,50 @@ const fullTitle = title === 'KlawAgent' ? title : `${title} | KlawAgent`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content={robotsContent} />
     <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:site_name" content="KlawAgent" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <meta name="twitter:site" content="@klawagent" />
+    <meta name="twitter:creator" content="@klawagent" />
+    
+    <!-- Additional SEO -->
+    <meta name="author" content="KlawAgent Team" />
+    <meta name="theme-color" content="#111111" />
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <!-- Structured Data -->
+    <StructuredData 
+      type={structuredDataType}
+      title={fullTitle}
+      description={description}
+      url={canonicalURL}
+      image={image}
+      datePublished={datePublished}
+      dateModified={dateModified}
+      author={author}
+    />
   </head>
   <body>
     <nav class="nav">
