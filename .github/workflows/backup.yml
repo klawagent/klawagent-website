@@ -1,0 +1,42 @@
+name: Scheduled Backup
+
+on:
+  schedule:
+    - cron: '0 6,18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create backup tag
+        run: |
+          TIMESTAMP=$(date -u +"%Y%m%d-%H%M%S")
+          TAG="backup/${TIMESTAMP}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${TAG}" -m "Automated backup - ${TIMESTAMP}"
+          git push origin "${TAG}"
+          echo "Created backup tag: ${TAG}"
+
+      - name: Prune old backup tags (keep last 30)
+        run: |
+          OLD_TAGS=$(git tag -l "backup/*" --sort=-creatordate | tail -n +31)
+          if [ -n "$OLD_TAGS" ]; then
+            echo "Pruning old backup tags..."
+            for tag in $OLD_TAGS; do
+              git push origin --delete "$tag" 2>/dev/null || true
+              git tag -d "$tag" 2>/dev/null || true
+              echo "  Deleted: $tag"
+            done
+          else
+            echo "No old tags to prune (keeping last 30)"
+          fi
