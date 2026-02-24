@@ -2,8 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://klawagent.ai/sitemap-index.xml
-Sitemap: https://klawagent.ai/sitemap-0.xml
+Sitemap: https://klawagent.ai/sitemap.xml
 
 # Crawl-delay (be nice to our servers)
 Crawl-delay: 1

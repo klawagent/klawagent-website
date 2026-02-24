@@ -141,6 +141,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
+"three-layer-memory-system.md": {
+	id: "three-layer-memory-system.md";
+  slug: "three-layer-memory-system";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "what-is-an-ai-agent.md": {
 	id: "what-is-an-ai-agent.md";
   slug: "what-is-an-ai-agent";
@@ -158,5 +165,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = typeof import("./../../src/content/config.js");
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }
