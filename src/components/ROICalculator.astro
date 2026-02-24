@@ -1,9 +1,13 @@
 ---
+import { DollarSign, Clock, Zap, BarChart3, Shield, RefreshCw } from '@lucide/astro';
 ---
 
 <div class="roi-calculator">
   <div class="calc-header">
-    <h3>💰 KlawAgent vs VA Cost Calculator</h3>
+    <div class="calc-icon">
+      <DollarSign size={32} />
+    </div>
+    <h3>KlawAgent vs VA Cost Calculator</h3>
     <p>See your potential savings in real-time</p>
   </div>
   
@@ -63,12 +67,30 @@
   <div class="calc-benefits">
     <h4>Plus, KlawAgent works 24/7/365 (not just 20 hours):</h4>
     <div class="benefit-grid">
-      <div class="benefit">⏰ No sick days or vacations</div>
-      <div class="benefit">🌙 Works nights and weekends</div>
-      <div class="benefit">⚡ Instant responses (no delays)</div>
-      <div class="benefit">📈 Handles unlimited volume</div>
-      <div class="benefit">🎯 Never needs training or management</div>
-      <div class="benefit">🔄 Perfect consistency every time</div>
+      <div class="benefit">
+        <Clock size={16} />
+        No sick days or vacations
+      </div>
+      <div class="benefit">
+        <Clock size={16} />
+        Works nights and weekends
+      </div>
+      <div class="benefit">
+        <Zap size={16} />
+        Instant responses (no delays)
+      </div>
+      <div class="benefit">
+        <BarChart3 size={16} />
+        Handles unlimited volume
+      </div>
+      <div class="benefit">
+        <Shield size={16} />
+        Never needs training or management
+      </div>
+      <div class="benefit">
+        <RefreshCw size={16} />
+        Perfect consistency every time
+      </div>
     </div>
   </div>
   
@@ -90,6 +112,18 @@
   .calc-header {
     text-align: center;
     margin-bottom: 28px;
+  }
+  
+  .calc-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    margin-bottom: 16px;
   }
   
   .calc-header h3 {
@@ -222,9 +256,14 @@
   .benefit {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 0.875rem;
     color: var(--text);
+  }
+  
+  .benefit svg {
+    color: var(--accent);
+    flex-shrink: 0;
   }
   
   .calc-cta {
