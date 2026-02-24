@@ -116,4 +116,4 @@ We're also planning to extend this to client projects — every new client onboa
 
 ---
 
-If you want to see what a well-configured AI agent looks like in practice, [book a 15-minute call](https://calendar.app.google/your-link) and we'll walk you through how memory systems like this make a real difference for small business operations.
+If you want to see what a well-configured AI agent looks like in practice, [book a 15-minute call]([https://calendar.app.google/your-link](https://cal.com/welcomein/meeting)) and we'll walk you through how memory systems like this make a real difference for small business operations.
