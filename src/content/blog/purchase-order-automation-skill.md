@@ -3,7 +3,7 @@ title: "Beyond Chatbots: Why We Built a Purchase Order Skill That Actually Works
 description: "While others demo flashy AI, we're building skills that solve real business problems. Our new PO acknowledgment skill shows why automation should work while you sleep."
 date: 2026-02-24
 author: Aaron Masterson
-image: /og-image.jpg
+image: /blog-images/roi-calculator.png
 draft: false
 ---
 
