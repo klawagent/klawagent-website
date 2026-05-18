@@ -26,6 +26,19 @@ import Layout from '../layouts/Layout.astro';
 .pill { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border-light); border-radius:999px; padding:11px 16px; font-size:0.85rem; font-weight:500; box-shadow:0 2px 0 rgba(0,0,0,.05); }
 .pill-ico { width:28px; height:28px; border-radius:50%; background:var(--bg); border:1px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-size:0.8rem; flex-shrink:0; }
 
+/* MEMORY */
+.mem-s { text-align:center; }
+.mem-label { display:inline-block; border:1px solid var(--border-light); border-radius:999px; padding:6px 16px; font-size:0.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:24px; color:var(--muted); }
+.mem-s h2 { font-size:clamp(2rem,3.2vw,3.5rem); margin-bottom:16px; }
+.mem-sub { color:var(--muted); font-size:1rem; max-width:640px; margin:0 auto 48px; line-height:1.7; }
+.mem-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:32px; }
+.mem-card { background:var(--card); border:1px solid var(--border-light); border-radius:20px; padding:24px 20px; text-align:left; box-shadow:0 4px 0 rgba(0,0,0,.05); display:flex; flex-direction:column; gap:8px; }
+.mem-card .ico { font-size:1.5rem; margin-bottom:6px; }
+.mem-card h3 { font-size:1rem; margin:0; }
+.mem-card p { font-size:0.84rem; color:var(--muted); line-height:1.55; margin:0; }
+.mem-cta { color:var(--muted); font-size:0.9rem; }
+.mem-cta a { color:var(--text); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+
 /* TEAM */
 .team-s { text-align:center; }
 .team-s h2 { font-size:clamp(2rem,3.2vw,3.5rem); margin-bottom:16px; }
@@ -119,6 +132,7 @@ import Layout from '../layouts/Layout.astro';
   .hero-card { aspect-ratio:4/3; }
   .plat-card { grid-template-columns:1fr; gap:32px; padding:28px 24px; }
   .why-grid,.task-grid,.inc-list { grid-template-columns:1fr 1fr; }
+  .mem-grid { grid-template-columns:repeat(2,1fr); }
   .pills { grid-template-columns:1fr; }
   .api-s { padding:64px 24px; }
   .total-nums { flex-wrap:wrap; justify-content:center; }
@@ -126,6 +140,7 @@ import Layout from '../layouts/Layout.astro';
 }
 @media (max-width:640px) {
   .why-grid,.task-grid { grid-template-columns:1fr; }
+  .mem-grid { grid-template-columns:1fr; }
   .inc-list { grid-template-columns:1fr; }
   .two-col { gap:40px; }
   .hero h1 { font-size:2.6rem; }
@@ -230,6 +245,43 @@ import Layout from '../layouts/Layout.astro';
         <img src="/weve-got-your-back.png" alt="We've got your back" width="600" height="450" />
       </div>
     </div>
+  </div>
+</section>
+
+<!-- MEMORY -->
+<section class="s mem-s" id="memory">
+  <div class="wrap">
+    <div class="mem-label">BUILT DIFFERENT</div>
+    <h2>Memory that matches the task</h2>
+    <p class="mem-sub">Most AI tools dump everything into one vector store and hope retrieval works. KlawAgent picks the right memory shape for each workflow — so the agent remembers what it should, the way it should.</p>
+    <div class="mem-grid">
+      <div class="mem-card">
+        <div class="ico">💬</div>
+        <h3>Chat memory</h3>
+        <p>Free-form back-and-forth that stays coherent across messages and sessions. For brainstorming, drafting, and strategy.</p>
+      </div>
+      <div class="mem-card">
+        <div class="ico">📋</div>
+        <h3>Task memory</h3>
+        <p>A bundle of context and prior runs for a recurring workflow. Monday's weekly report starts where last Monday's left off.</p>
+      </div>
+      <div class="mem-card">
+        <div class="ico">📄</div>
+        <h3>Document memory</h3>
+        <p>Long documents stored as trees, not chunks. Pull the right clause without losing the surrounding context.</p>
+      </div>
+      <div class="mem-card">
+        <div class="ico">🕸️</div>
+        <h3>Relationship memory</h3>
+        <p>A graph of the people, deals, and projects in your world. "Sarah from the West Loop deal" resolves to the right Sarah.</p>
+      </div>
+      <div class="mem-card">
+        <div class="ico">📊</div>
+        <h3>Data memory</h3>
+        <p>Tabular data stored as tables. The agent can filter, sort, and aggregate — not just summarize in prose.</p>
+      </div>
+    </div>
+    <p class="mem-cta">SOPs are first-class task scripts — and you update them by forwarding an email. <a href="/blog/multi-memory-profiles/">Read how it works →</a></p>
   </div>
 </section>
 
