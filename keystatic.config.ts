@@ -1,9 +1,11 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  // Local mode: the Admin UI runs only during `npm run dev` and writes
-  // directly to the Markdown files in this repo. Commit + push to publish.
-  storage: { kind: 'local' },
+  // Local dev edits the Markdown files directly. The deployed server (Railway)
+  // commits changes to GitHub through a Keystatic GitHub App.
+  storage: import.meta.env.DEV
+    ? { kind: 'local' }
+    : { kind: 'github', repo: 'klawagent/klawagent-website' },
 
   ui: {
     brand: { name: 'KlawAgent CMS' },
