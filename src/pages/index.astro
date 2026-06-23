@@ -1,475 +1,333 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { 
-  Mail, MessageCircle, Link, Database, Lock, Zap, Users, TrendingUp, Shield, RefreshCw,
-  Bot, Archive, Phone, FileCheck, Brain, Home, Infinity, Check
+import {
+  ArrowRight, Check, AtSign, Brain, Users, Puzzle, Globe, Database, Plus,
+  Linkedin, Facebook, Instagram, MapPin
 } from '@lucide/astro';
+import StructuredData from '../components/StructuredData.astro';
+
+const title = 'KlawAgent — AI without the IT · Early access';
+const description = 'Hire your first AI employee. KlawAgent runs the boring stuff so you can focus on your business. Join the early-access waitlist.';
+const canonicalURL = new URL('/', Astro.site);
+const ogImage = '/og-image.jpg';
+const year = new Date().getFullYear();
+
+// Endpoint that receives the waitlist signup and forwards it to Resend.
+// (Lives on the always-on Railway server; the static site posts to it cross-origin.)
+const WAITLIST_ENDPOINT = 'https://klawagent-website-production.up.railway.app/api/waitlist';
+
+const FEATURES = [
+  { icon: AtSign,   label: 'Agent Email',           desc: 'Every agent gets its own inbox to send and receive.' },
+  { icon: Brain,    label: 'Persistent Memory',     desc: 'Your agents get smarter with every task.' },
+  { icon: Users,    label: 'Multi-Agent',           desc: 'Specialists that work in parallel.' },
+  { icon: Puzzle,   label: 'Dynamic Skills',        desc: 'One skill, every scenario handled.' },
+  { icon: Globe,    label: 'Web Browsing',          desc: 'Live research, straight from the source.' },
+  { icon: Database, label: 'Prebuilt Data Sources', desc: '36+ APIs ready out of the box.' },
+];
 ---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={canonicalURL} />
+<link rel="icon" type="image/png" href="/logo.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#C8392B" />
 
-<Layout title="KlawAgent" description="Your AI Employee, Managed. KlawAgent handles the backend so you can handle business." structuredDataType="Organization">
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(ogImage, Astro.site)} />
+<meta property="og:site_name" content="KlawAgent" />
+<meta property="og:locale" content="en_US" />
 
-<style>
-/* HERO */
-.hero { padding:60px 48px 80px; max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr 1.3fr; gap:56px; align-items:center; min-height:calc(100vh - var(--nav-h)); }
-.hero h1 { font-size:clamp(3rem,5vw,5.2rem); line-height:1.05; margin-bottom:20px; }
-.hero p { font-size:1.05rem; color:var(--muted); margin-bottom:32px; max-width:400px; line-height:1.7; }
-.hero-card { position:relative; border-radius:28px; overflow:hidden; box-shadow:0 6px 32px rgba(0,0,0,.08); border:3px solid #111111; background:#e8e2da; aspect-ratio:640/500; }
-.hero-card img { width:100%; height:100%; object-fit:cover; object-position:center 10%; display:block; }
-.hero-badge { position:absolute; bottom:18px; right:18px; background:var(--accent); color:#fff; border-radius:50%; width:74px; height:74px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.62rem; font-weight:700; line-height:1.3; text-transform:uppercase; letter-spacing:.04em; }
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+<meta name="twitter:site" content="@klawagent" />
+<meta name="twitter:creator" content="@klawagent" />
+<meta name="author" content="KlawAgent Team" />
 
-/* TWO-COL */
-.two-col { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
-.two-col.flip .img-col { order:-1; }
-.two-col h2 { font-size:clamp(2rem,3.2vw,3.5rem); line-height:1.1; margin-bottom:20px; }
-.two-col p { font-size:1rem; color:var(--muted); line-height:1.75; margin-bottom:28px; }
-.img-col { border-radius:20px; overflow:hidden; box-shadow:0 4px 0 rgba(0,0,0,.08); border:3px solid #111111; }
-.img-col img { width:100%; height:auto; display:block; }
-.icon-row { display:flex; gap:10px; margin:0 0 28px; }
-.i-circle { width:44px; height:44px; border-radius:50%; background:var(--card); border:1px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
-.i-circle svg { color:var(--accent); }
-.pills { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.pill { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border-light); border-radius:999px; padding:11px 16px; font-size:0.85rem; font-weight:500; box-shadow:0 2px 0 rgba(0,0,0,.05); }
-.pill-ico { width:28px; height:28px; border-radius:50%; background:var(--bg); border:1px solid var(--border-light); display:flex; align-items:center; justify-content:center; font-size:0.8rem; flex-shrink:0; }
-.pill-ico svg { color:var(--accent); }
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
 
-/* TEAM */
-.team-s { text-align:center; }
-.team-s h2 { font-size:clamp(2rem,3.2vw,3.5rem); margin-bottom:16px; }
-.team-sub { color:var(--muted); font-size:1rem; max-width:640px; margin:0 auto 48px; }
-.task-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.task-item { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--border-light); border-radius:999px; padding:14px 20px; font-size:0.875rem; box-shadow:0 2px 0 rgba(0,0,0,.05); }
-.task-check { width:24px; height:24px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem; flex-shrink:0; }
-.task-check svg { color:#fff; }
+<script is:inline src="https://cdn.tailwindcss.com"></script>
+<script is:inline>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'brand-red': '#C8392B',
+          'brand-red-dark': '#A62E22',
+          'brand-brown': '#7B6B58',
+          'brand-black': '#1C1917',
+          'brand-grey': '#F5F4F1',
+          'brand-grey-dark': '#C8C2BA',
+          'brand-grey-mid': '#9B9188',
+          'surface-secondary': '#EFEDE9',
+        },
+        boxShadow: {
+          'card': '0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04)',
+          'card-hover': '0 4px 12px 0 rgb(0 0 0 / 0.08), 0 2px 4px -1px rgb(0 0 0 / 0.06)',
+          'hero': '0 24px 60px -20px rgb(28 25 23 / 0.18), 0 8px 20px -8px rgb(28 25 23 / 0.08)',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          logo: ['Lora', 'Georgia', 'serif'],
+        },
+      },
+    },
+  };
+</script>
+<style is:inline>
+  html, body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { background: #EFEDE9; color: #1C1917; }
 
-/* API DARK */
-.api-s { background:#111111; color:#fff; padding:96px 48px; text-align:center; }
-.api-label { display:inline-block; background:var(--accent); color:#fff; border-radius:999px; padding:6px 16px; font-size:0.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:24px; }
-.api-s h2 { font-family:var(--serif); font-size:clamp(2rem,3.2vw,3.5rem); font-weight:700; color:#fff; margin-bottom:16px; }
-.api-sub { color:#888; font-size:1rem; max-width:520px; margin:0 auto 52px; }
-.api-logos { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; max-width:860px; margin:0 auto 20px; }
-.api-logo { background:#1c1c1c; border:1px solid #2a2a2a; border-radius:16px; padding:14px 18px; display:flex; flex-direction:column; align-items:center; gap:8px; min-width:88px; }
-.api-logo .ico { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; color:#fff; font-family:var(--sans); }
-.api-logo .nm { font-size:0.68rem; color:#999; text-align:center; }
-.api-more { color:#555; font-size:0.85rem; }
-.api-more a { color:var(--accent); }
+  /* Subtle paper texture for warmth */
+  .paper-bg {
+    background-color: #EFEDE9;
+    background-image:
+      radial-gradient(at 20% 10%, rgba(200, 57, 43, 0.06) 0px, transparent 50%),
+      radial-gradient(at 85% 90%, rgba(123, 107, 88, 0.08) 0px, transparent 50%),
+      radial-gradient(at 50% 60%, rgba(200, 57, 43, 0.03) 0px, transparent 60%);
+  }
 
-/* WHY */
-.why-s { text-align:center; }
-.why-label { display:inline-block; border:1px solid var(--border-light); border-radius:999px; padding:6px 16px; font-size:0.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:24px; color:var(--muted); }
-.why-s h2 { font-size:clamp(2rem,3.2vw,3.5rem); margin-bottom:16px; }
-.why-sub { color:var(--muted); font-size:1rem; max-width:580px; margin:0 auto 48px; }
-.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-.why-card { background:var(--card); border:1px solid var(--border-light); border-radius:20px; padding:28px; text-align:left; box-shadow:0 4px 0 rgba(0,0,0,.05); }
-.why-card .ico { font-size:1.6rem; margin-bottom:14px; color:var(--accent); }
-.why-card h3 { font-size:1.05rem; margin-bottom:8px; }
-.why-card p { font-size:0.875rem; color:var(--muted); line-height:1.6; }
-.why-note { text-align:center; color:var(--muted); font-size:0.875rem; margin-top:32px; }
+  /* Pulse dot */
+  @keyframes pulse-dot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.6; } }
+  .pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
 
-/* PRICING */
-.price-s { text-align:center; }
-.price-s h2 { font-size:clamp(2rem,3.2vw,3.5rem); margin-bottom:12px; }
-.price-sub { color:var(--muted); font-size:1.125rem; max-width:640px; margin:0 auto 40px; }
-.plat-card { background:var(--card); border:1px solid var(--border); border-radius:28px; box-shadow:0 18px 0 rgba(0,0,0,.10); display:grid; grid-template-columns:auto 1fr; gap:64px; padding:40px 48px; margin-bottom:24px; text-align:left; align-items:start; }
-.plat-label { font-size:0.875rem; color:var(--muted); line-height:1.5; margin-bottom:12px; }
-.plat-price-row { display:flex; align-items:baseline; gap:6px; margin-bottom:8px; }
-.plat-num { font-family:var(--serif); font-size:3.5rem; font-weight:700; color:var(--text); line-height:1; }
-.plat-per { font-size:1rem; color:var(--muted); }
-.plat-tagline { font-size:0.875rem; color:var(--muted); }
-.inc-list { display:grid; grid-template-columns:1fr 1fr; gap:10px 32px; align-content:start; }
-.inc-item { display:flex; align-items:flex-start; gap:8px; font-size:0.875rem; color:var(--text); line-height:1.4; }
-.inc-item::before { content:"✓"; color:var(--accent); font-weight:700; flex-shrink:0; }
-.pkg-plus { text-align:center; font-size:2rem; color:var(--muted); margin:12px 0 24px; }
-.pkg-wrap { display:flex; justify-content:center; margin-bottom:40px; }
-.pkg { background:var(--card); border:2px solid #fff; border-radius:24px; box-shadow:0 8px 0 rgba(0,0,0,.12); padding:32px 28px; text-align:left; width:100%; max-width:420px; }
-.pkg-name { font-family:var(--serif); font-size:1.25rem; font-weight:700; margin-bottom:4px; }
-.pkg-tagline { font-size:0.875rem; color:var(--muted); margin-bottom:20px; }
-.pkg-price { font-family:var(--serif); font-size:1.875rem; font-weight:700; line-height:1; margin-bottom:4px; }
-.pkg-fee { font-size:0.75rem; color:var(--muted); }
-.pkg-divider { border:none; border-top:1px solid rgba(17,17,17,.12); margin:18px 0; }
-.pkg-feats { list-style:none; display:flex; flex-direction:column; gap:10px; }
-.pkg-feats li { display:flex; align-items:flex-start; gap:8px; font-size:0.875rem; }
-.pkg-feats li::before { content:"✓"; color:var(--accent); font-weight:700; flex-shrink:0; }
-.total-row { text-align:center; padding-top:8px; }
-.total-label { font-size:0.75rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-bottom:12px; }
-.total-nums { display:flex; align-items:baseline; justify-content:center; gap:12px; margin-bottom:8px; }
-.total-onetime { font-family:var(--serif); font-size:1.875rem; font-weight:700; }
-.total-plus { font-size:1rem; color:var(--muted); }
-.total-monthly { font-family:var(--serif); font-size:1.875rem; font-weight:700; }
-.total-mo { font-size:1rem; font-weight:400; color:var(--muted); }
-.total-sub { font-size:0.875rem; color:var(--muted); margin-bottom:20px; }
-.price-note { text-align:center; font-size:.78rem; color:var(--muted); margin-top:20px; }
+  /* CTA hover lift */
+  .cta-lift { transform: translateY(0); }
+  .cta-lift:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -8px rgba(200, 57, 43, 0.55), 0 6px 12px -2px rgba(200, 57, 43, 0.3) !important; }
 
-/* FAQ */
-.faq-list { display:flex; flex-direction:column; gap:10px; }
-.faq-item { background:var(--card); border:1px solid var(--border); border-radius:28px; box-shadow:0 4px 0 rgba(0,0,0,.07); overflow:hidden; }
-.faq-q { width:100%; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:20px 28px; font-size:1rem; font-weight:500; font-family:var(--sans); color:var(--text); text-align:left; gap:16px; }
-.faq-plus { width:32px; height:32px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; transition:transform .2s; line-height:1; }
-.faq-a { display:none; padding:0 28px 20px; font-size:0.9375rem; color:var(--muted); line-height:1.7; }
-.faq-item.open .faq-a { display:block; }
-.faq-item.open .faq-plus { transform:rotate(45deg); }
-
-/* CONTACT */
-.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
-.c-rows { display:flex; flex-direction:column; gap:20px; }
-.c-row { display:flex; gap:16px; align-items:center; }
-.c-ico { width:48px; height:48px; border-radius:50%; background:var(--card); border:1px solid var(--border); box-shadow:0 4px 0 rgba(0,0,0,.06); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
-.c-lbl { font-size:0.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:2px; }
-.c-val { font-size:1rem; font-weight:500; }
-.cal-box { background:var(--card); border:1px solid var(--border); border-radius:28px; box-shadow:0 18px 0 rgba(0,0,0,.10); padding:28px 20px 0; position:relative; overflow:hidden; }
-.cal-sticker { position:absolute; top:-16px; left:50%; transform:translateX(-50%); background:var(--card); border:1px solid var(--border); border-radius:999px; padding:6px 18px; font-size:0.75rem; font-weight:600; white-space:nowrap; box-shadow:0 2px 0 rgba(0,0,0,.06); z-index:1; }
-
-/* RESPONSIVE */
-@media (max-width:960px) {
-  .hero,.two-col,.contact-grid { grid-template-columns:1fr; }
-  .two-col.flip .img-col { order:0; }
-  .hero { padding:40px 24px 60px; min-height:auto; }
-  .hero-card { aspect-ratio:4/3; }
-  .plat-card { grid-template-columns:1fr; gap:32px; padding:28px 24px; }
-  .why-grid,.task-grid,.inc-list { grid-template-columns:1fr 1fr; }
-  .pills { grid-template-columns:1fr; }
-  .api-s { padding:64px 24px; }
-  .total-nums { flex-wrap:wrap; justify-content:center; }
-  .contact-grid { gap:48px; }
-}
-@media (max-width:640px) {
-  .why-grid,.task-grid { grid-template-columns:1fr; }
-  .inc-list { grid-template-columns:1fr; }
-  .two-col { gap:40px; }
-  .hero h1 { font-size:2.6rem; }
-  .plat-card { padding:24px 20px; }
-  .api-logos { gap:8px; }
-  .api-logo { min-width:72px; padding:10px 12px; }
-  .task-grid { grid-template-columns:1fr 1fr; }
-}
-@media (max-width:420px) {
-  .task-grid { grid-template-columns:1fr; }
-  .pills { grid-template-columns:1fr; }
-}
+  /* Grain overlay */
+  .grain::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.04; z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
 </style>
 
-<!-- HERO -->
-<div class="wrap">
-  <section class="hero">
-    <div>
-      <h1>Your AI Employee,<br/>Managed</h1>
-      <p>KlawAgent handles the backend so you can handle business.</p>
-      <a href="#contact" class="btn btn-red">BOOK A 15-MIN CALL &nbsp;→</a>
-    </div>
-    <div class="hero-card">
-      <img src="/office_lobster.png" alt="Your AI employee at work" width="640" height="500" />
-      <div class="hero-badge">AI that<br/>actually<br/>works</div>
-    </div>
-  </section>
-</div>
+<StructuredData type="Organization" title={title} description={description} url={canonicalURL} image={ogImage} />
+</head>
+<body class="paper-bg grain min-h-screen">
+  <div class="min-h-screen flex flex-col">
 
-<!-- AUTOMATE -->
-<section class="s">
-  <div class="wrap">
-    <div class="two-col">
-      <div>
-        <h2>Automate Your Daily Tasks with OpenClaw</h2>
-        <p>We do the heavy lifting — deploying and managing OpenClaw, connecting tools like Slack and Gmail — so your team stops drowning in tasks and you can focus on training your AI employee.</p>
-        <a href="#product" class="btn btn-red">SEE HOW IT WORKS &nbsp;→</a>
+    <!-- Top nav -->
+    <nav class="relative z-20 px-6 lg:px-12 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center group">
+        <span class="font-logo font-semibold text-[26px] tracking-tight text-brand-black group-hover:text-brand-red transition-colors">KlawAgent</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-medium text-brand-brown border border-brand-grey-dark/60 bg-white/60">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-red pulse-dot"></span>
+          Launching soon
+        </span>
+        <a href="#signup" class="flex items-center gap-1.5 bg-brand-black text-white px-4 py-2 rounded-lg text-base font-medium hover:bg-brand-brown transition-colors">
+          Early access
+          <ArrowRight size={16} />
+        </a>
       </div>
-      <div class="img-col">
-        <img src="/automate.png" alt="Automate your daily tasks" width="600" height="450" />
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<!-- WHAT WE ACTUALLY DO -->
-<section class="s" id="product">
-  <div class="wrap">
-    <div class="two-col flip">
-      <div>
-        <h2>What we actually do</h2>
-        <p>We connect the tools you already use — email, Slack, CRM, social, and custom software — so your AI employee can handle tasks, manage workflows, and keep things moving without the busywork.</p>
-        <div class="icon-row">
-          <div class="i-circle"><Mail size={20} /></div>
-          <div class="i-circle"><MessageCircle size={20} /></div>
-          <div class="i-circle"><Link size={20} /></div>
-          <div class="i-circle"><Database size={20} /></div>
+    <main class="flex-1">
+
+      <!-- Hero -->
+      <section class="relative px-6 pt-8 pb-14 lg:pt-14 lg:pb-16">
+        <div class="relative z-10 max-w-5xl mx-auto">
+          <p class="text-center text-[14px] sm:text-[15px] font-medium text-brand-brown mb-5 tracking-wide">
+            You shouldn't need a tech team to use AI.
+          </p>
+
+          <h1 class="font-logo font-semibold tracking-tight text-brand-black text-center leading-[1.02] text-[52px] sm:text-[68px] lg:text-[84px] mb-6">
+            Hire your first <span class="italic text-brand-red">AI employee.</span>
+          </h1>
+
+          <p class="text-center text-[17px] sm:text-[19px] text-brand-brown max-w-[620px] mx-auto mb-9 leading-relaxed">
+            KlawAgent runs the boring stuff so you can focus on your <span class="text-brand-black font-medium">business</span>.
+          </p>
+
+          <!-- Signup form -->
+          <div class="w-full max-w-[520px] mx-auto" id="signup">
+            <div id="waitlist-formwrap">
+              <form id="waitlist-form" class="flex flex-col sm:flex-row gap-2.5" novalidate>
+                <div class="relative flex-1">
+                  <input
+                    id="waitlist-email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    placeholder="you@company.com"
+                    aria-label="Email address"
+                    class="w-full rounded-xl bg-white px-4 py-3.5 text-[16px] text-brand-black placeholder-brand-grey-mid outline-none transition-all"
+                    style="border: 1px solid rgba(123, 107, 88, 0.35); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);"
+                  />
+                </div>
+                <button
+                  id="waitlist-btn"
+                  type="submit"
+                  class="cta-lift inline-flex items-center justify-center gap-2 bg-brand-red text-white px-6 py-3.5 rounded-xl text-[16px] font-semibold hover:bg-brand-red-dark transition-all disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+                  style="box-shadow: 0 10px 24px -8px rgba(200, 57, 43, 0.45), 0 4px 8px -2px rgba(200, 57, 43, 0.25);"
+                >
+                  <span id="waitlist-btn-icon" class="inline-flex"><ArrowRight size={16} /></span>
+                  Get early access
+                </button>
+              </form>
+              <p id="waitlist-hint" class="mt-3 text-center text-[13px] text-brand-grey-mid">
+                <span>Join the waitlist — be first in when we launch. No spam.</span>
+              </p>
+            </div>
+
+            <!-- Success state (hidden until submit) -->
+            <div
+              id="waitlist-success"
+              class="hidden rounded-2xl bg-white px-6 py-7 items-start gap-4"
+              style="border: 1px solid rgba(200, 57, 43, 0.22); box-shadow: 0 24px 60px -20px rgba(200, 57, 43, 0.18), 0 8px 20px -8px rgba(123, 107, 88, 0.18);"
+            >
+              <div class="w-10 h-10 rounded-xl bg-brand-red flex items-center justify-center text-white flex-shrink-0">
+                <Check size={20} strokeWidth={2.5} />
+              </div>
+              <div class="min-w-0">
+                <p class="text-[17px] font-semibold text-brand-black mb-1">You're on the list.</p>
+                <p class="text-[14.5px] text-brand-brown leading-relaxed">
+                  We'll email <span id="waitlist-success-email" class="font-medium text-brand-black"></span> the moment early access opens. No spam — just the invite.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <a href="#features" class="btn btn-red">EXPLORE INTEGRATIONS &nbsp;→</a>
-      </div>
-      <div class="img-col">
-        <img src="/what-we-do.png" alt="Integrations" width="600" height="450" />
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-<!-- 10X -->
-<section class="s">
-  <div class="wrap">
-    <div class="two-col">
-      <div>
-        <h2>10x the output. Not the headcount.</h2>
-        <p>The average full-time VA costs $1,400–$2,100/month ($8-12/hour × 40 hours/week) and works 8 hours a day. KlawAgent costs a fraction of that and works 24/7, 365 days a year — no sick days, no holidays, no overtime.</p>
-      </div>
-      <div class="img-col">
-        <img src="/10x-output.png" alt="10x the output" width="600" height="450" />
-      </div>
-    </div>
-  </div>
-</section>
+      <!-- Key features -->
+      <section class="relative w-full py-14 lg:py-20" style="background-color: #E8E4DC;">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-10">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-brand-grey-mid font-semibold mb-3">What's inside</div>
+            <h2 class="font-logo font-semibold tracking-tight text-brand-black text-[30px] sm:text-[38px] leading-[1.12]">
+              Everything an agent employee needs to work.
+            </h2>
+          </div>
 
-<!-- WE'VE GOT YOUR BACK -->
-<section class="s">
-  <div class="wrap">
-    <div class="two-col flip">
-      <div>
-        <h2>We've got your back</h2>
-        <p>From security to strategy, we're there to make sure you're a success.</p>
-        <div class="pills">
-          <div class="pill"><div class="pill-ico"><Bot size={14} /></div>15+ SubAgents</div>
-          <div class="pill"><div class="pill-ico"><Zap size={14} /></div>20+ Skills Ready to Deploy</div>
-          <div class="pill"><div class="pill-ico"><Archive size={14} /></div>Daily Backups</div>
-          <div class="pill"><div class="pill-ico"><Lock size={14} /></div>Private VPS</div>
-          <div class="pill"><div class="pill-ico"><Phone size={14} /></div>Weekly Strategy Calls</div>
-          <div class="pill"><div class="pill-ico"><FileCheck size={14} /></div>Full Audit Logs</div>
-          <div class="pill"><div class="pill-ico"><RefreshCw size={14} /></div>Automatic Updates</div>
-          <div class="pill"><div class="pill-ico"><Brain size={14} /></div>Model Optimizations</div>
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            {FEATURES.map((f) => {
+              const FeatureIcon = f.icon;
+              return (
+                <div class="group flex flex-col items-start text-left rounded-2xl bg-white border border-brand-grey-dark/50 p-5 transition-all hover:border-brand-red/30 hover:-translate-y-0.5 shadow-card hover:shadow-card-hover">
+                  <div class="w-10 h-10 rounded-xl bg-brand-grey flex items-center justify-center text-brand-red mb-4 transition-colors group-hover:bg-brand-red group-hover:text-white">
+                    <FeatureIcon size={20} />
+                  </div>
+                  <div class="text-[15.5px] font-semibold text-brand-black mb-1">{f.label}</div>
+                  <div class="text-[13.5px] text-brand-brown leading-snug">{f.desc}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div class="flex justify-center mt-5">
+            <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/60 border border-dashed border-brand-grey-dark/70 text-[14px] font-medium text-brand-brown">
+              <span class="text-brand-red inline-flex"><Plus size={16} /></span>
+              plus more on the way
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="img-col">
-        <img src="/weve-got-your-back.png" alt="We've got your back" width="600" height="450" />
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-<!-- YOUR TEAM -->
-<section class="s team-s" id="features">
-  <div class="wrap">
-    <h2>Your team has better things to do</h2>
-    <p class="team-sub">KlawAgent handles the repetitive work so your team can focus on what actually grows the business — whether you're an agency, a real estate team, an e-commerce store, or anything in between.</p>
-    <div class="task-grid">
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Follow up with leads automatically after a form fill</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Send personalised cold outreach at scale</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Update your CRM after every call or email</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Triage and respond to support tickets</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Onboard new clients with automated document requests</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Generate weekly reports from your data</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Schedule and post content across channels</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Repurpose long-form content into social posts</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Monitor brand mentions and flag them for review</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Chase unpaid invoices</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Extract data from receipts and log expenses</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Summarise contracts and flag key clauses</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Instant lead follow-up the moment someone enquires</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Send showing reminders and property updates</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Pull together market snapshots for clients</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Reply to customer service questions 24/7</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Send order updates and shipping notifications</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Write product descriptions in bulk</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Automate client reporting every Monday</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Brief writers with AI-generated outlines</div>
-      <div class="task-item"><div class="task-check"><Check size={12} /></div>Manage campaign performance alerts</div>
-    </div>
-  </div>
-</section>
+    </main>
 
-<!-- UNIFIED API HUB -->
-<section class="api-s">
-  <div class="wrap">
-    <div class="api-label">UNIFIED API HUB</div>
-    <h2>One API Key to Rule Them All</h2>
-    <p class="api-sub">Get access to 30+ AI models, marketing apps, and business tools with a single API key — no extra accounts needed.</p>
-    <div class="api-logos">
-      <div class="api-logo"><div class="ico" style="background:#3d3d3d;font-size:.75rem">AN</div><span class="nm">Anthropic</span></div>
-      <div class="api-logo"><div class="ico" style="background:#10a37f">AI</div><span class="nm">OpenAI</span></div>
-      <div class="api-logo"><div class="ico" style="background:#8b5cf6">✦</div><span class="nm">Gemini</span></div>
-      <div class="api-logo"><div class="ico" style="background:#9d174d;font-size:.7rem">MM</div><span class="nm">MiniMax</span></div>
-      <div class="api-logo"><div class="ico" style="background:#e8670a">🦁</div><span class="nm">Brave Search</span></div>
-      <div class="api-logo"><div class="ico" style="background:#fc4a1a">🔊</div><span class="nm">ElevenLabs</span></div>
-      <div class="api-logo"><div class="ico" style="background:#1877f2;font-size:1.1rem;font-weight:900">f</div><span class="nm">Facebook</span></div>
-      <div class="api-logo"><div class="ico" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">📸</div><span class="nm">Instagram</span></div>
-      <div class="api-logo"><div class="ico" style="background:#ff0000">▶</div><span class="nm">YouTube</span></div>
-      <div class="api-logo"><div class="ico" style="background:#111;font-weight:900">𝕏</div><span class="nm">X (Twitter)</span></div>
-      <div class="api-logo"><div class="ico" style="background:#111;font-size:.6rem;font-weight:700">TikTok</div><span class="nm">TikTok</span></div>
-      <div class="api-logo"><div class="ico" style="background:#0a66c2;font-weight:900">in</div><span class="nm">LinkedIn</span></div>
-      <div class="api-logo"><div class="ico" style="background:#ff4500">👽</div><span class="nm">Reddit</span></div>
-      <div class="api-logo"><div class="ico" style="background:#111;font-size:.6rem;font-weight:700">Thrd</div><span class="nm">Threads</span></div>
-      <div class="api-logo"><div class="ico" style="background:#2ca5e0">✈️</div><span class="nm">Telegram</span></div>
-      <div class="api-logo"><div class="ico" style="background:#fffc00;color:#000;font-size:.6rem;font-weight:700">SNAP</div><span class="nm">Snapchat</span></div>
-      <div class="api-logo"><div class="ico" style="background:#1a73e8;font-weight:700">G</div><span class="nm">Google My Business</span></div>
-      <div class="api-logo"><div class="ico" style="background:#e06c2c;font-weight:700;font-size:.8rem">H</div><span class="nm">Hunter.io</span></div>
-    </div>
-    <p class="api-more">More integrations added regularly · <a href="mailto:hey@klawagent.ai">Request a platform →</a></p>
-  </div>
-</section>
-
-<!-- WHY OPENCLAW -->
-<section class="s why-s">
-  <div class="wrap">
-    <div class="why-label">BUILT DIFFERENT</div>
-    <h2>Why OpenClaw?</h2>
-    <p class="why-sub">Most AI tools rent you access to their platform. OpenClaw runs on your infrastructure, uses your keys, and works for you — not the platform.</p>
-    <div class="why-grid">
-      <div class="why-card"><div class="ico"><Lock size={24} /></div><h3>Your Data Stays Yours</h3><p>Nothing is stored on our servers. Your conversations, workflows, and business data live on your private server — and only yours.</p></div>
-      <div class="why-card"><div class="ico"><RefreshCw size={24} /></div><h3>Never Locked Into One AI</h3><p>Switch between Claude, GPT-4, Gemini, MiniMax and more without rebuilding anything. If a better model comes out tomorrow, you can use it.</p></div>
-      <div class="why-card"><div class="ico"><Home size={24} /></div><h3>You Own the Infrastructure</h3><p>Your agents run on a dedicated server — not a shared platform. If you ever leave, your setup goes with you. No lock-in, ever.</p></div>
-      <div class="why-card"><div class="ico"><Shield size={24} /></div><h3>Privacy by Design</h3><p>Your data never trains someone else's model. What happens in your agent stays in your agent.</p></div>
-      <div class="why-card"><div class="ico"><TrendingUp size={24} /></div><h3>Pay for What You Use</h3><p>No per-seat pricing. No per-action charges. One flat monthly rate, plus only the API usage you actually consume.</p></div>
-      <div class="why-card"><div class="ico"><Users size={24} /></div><h3>No Black Box</h3><p>OpenClaw is open source. You can see exactly what your agents are doing and why. Full transparency, full control.</p></div>
-    </div>
-    <p class="why-note">OpenClaw is the open-source agent framework powering every KlawAgent deployment.</p>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="s price-s" id="pricing">
-  <div class="wrap">
-    <h2>One flat rate. You choose how you start.</h2>
-    <p class="price-sub">Everyone pays $147/month. The difference is how much hands-on help you want getting set up.</p>
-    <div class="plat-card">
-      <div>
-        <div class="plat-label">Monthly Platform<br/>Fee</div>
-        <div class="plat-price-row">
-          <span class="plat-num">$147</span>
-          <span class="plat-per">/month</span>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-brand-grey-dark/60 px-6 lg:px-12 py-12">
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div>
+          <a href="#" class="flex items-center mb-3">
+            <span class="font-logo font-semibold text-[22px] tracking-tight text-brand-black">KlawAgent</span>
+          </a>
+          <p class="text-sm text-brand-brown max-w-[300px] leading-relaxed">
+            AI without the IT. Built for the rest of us. Launching soon.
+          </p>
         </div>
-        <div class="plat-tagline">Every month, for every customer.</div>
-      </div>
-      <div class="inc-list">
-        <div class="inc-item">All Preselect SubAgents Included</div>
-        <div class="inc-item">Brave Search Included</div>
-        <div class="inc-item">Social Posting API Included</div>
-        <div class="inc-item">Unified API Integration</div>
-        <div class="inc-item">Dedicated Server (8 GB RAM · 2 vCPUs · 90 GB Disk · SFO2)</div>
-        <div class="inc-item">Daily Backups</div>
-        <div class="inc-item">Private VPS</div>
-        <div class="inc-item">Encrypted data in transit and at rest</div>
-        <div class="inc-item">Cloud Firewall &amp; DDoS Protection</div>
-        <div class="inc-item">24/7 Agent Uptime Monitoring</div>
-      </div>
-    </div>
-    <div class="pkg-plus">+</div>
-    <div class="pkg-wrap">
-      <div class="pkg">
-        <div class="pkg-name">Launch</div>
-        <div class="pkg-tagline">Get up and running fast</div>
-        <div class="pkg-price">$497</div>
-        <div class="pkg-fee">One-time onboarding fee</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-feats">
-          <li>1 Strategy Session</li>
-          <li>3 - 1 Hour Training Sessions</li>
-          <li>Connect Messenger (Slack, Telegram)</li>
-          <li>Connect Email (Gmail, Outlook, etc)</li>
-          <li>Connect up to 9 Social Accounts (Meta, YouTube, etc)</li>
-          <li>Connect 2 Custom Apps (ClickUp, Asana, etc)</li>
-          <li>4 Custom Skills</li>
-          <li>4 Custom Subagents</li>
-          <li>Model Optimization</li>
-          <li>30 Days Customer Support</li>
-        </ul>
-      </div>
-    </div>
-    <div class="total-row">
-      <div class="total-label">Your Total to Get Started</div>
-      <div class="total-nums">
-        <span class="total-onetime">$497</span>
-        <span class="total-plus">+</span>
-        <span class="total-monthly">$147<span class="total-mo">/mo</span></span>
-      </div>
-      <div class="total-sub">One-time setup · then flat monthly</div>
-      <a href="#contact" class="btn btn-red">BOOK A CALL TO GET STARTED</a>
-    </div>
-    <p class="price-note">* AI API usage costs (OpenAI, Anthropic, etc.) are not included and billed separately based on usage.</p>
-  </div>
-</section>
 
-<!-- FAQ -->
-<section class="s">
-  <div class="wrap" style="max-width:768px;text-align:center">
-    <h2 style="font-size:clamp(2rem,3.2vw,3.5rem);margin-bottom:16px;white-space:nowrap">Frequently asked questions</h2>
-    <p style="color:var(--muted);font-size:1.125rem;margin-bottom:36px">Still have questions? <a href="#contact" style="color:var(--text);font-weight:600;text-decoration:underline;text-underline-offset:3px">Get in touch</a></p>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q"><span>What makes KlawAgent different from other OpenClaw hosting providers and platforms?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">Other platforms hand you off after setup and just manage the hosting. KlawAgent is different — we're an extension of your team. We work alongside you every month to build, optimize, and grow your automations. You're not buying a subscription. You're gaining a partner.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>How much should I expect to spend on AI usage each month?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">
-          <p>AI usage costs vary depending on how active your agents are and which models they use. Most small business clients spend between $20–$100/month on API usage. We include model and prompt optimization with every plan to keep your costs as low as possible.</p>
-          <br/>
-          <p>Think of API costs like worker hours — the more hours you would give an employee, the more you can expect to spend on AI. A part-time employee costs less than a full-time one. In the same way, agents that run constantly will use more API budget than those that run occasionally. Selecting the better models (like Opus 4.6), which is like hiring a more experienced employee — they get more done in less time, but cost a bit more per hour. The optimization we include with every plan helps keep that cost low while getting high-quality results.</p>
+        <div class="flex items-center gap-2">
+          <a href="#linkedin" aria-label="LinkedIn" class="w-9 h-9 rounded-md border border-brand-grey-dark/60 flex items-center justify-center text-brand-brown hover:text-brand-black hover:border-brand-black transition-colors"><Linkedin size={16} /></a>
+          <a href="#facebook" aria-label="Facebook" class="w-9 h-9 rounded-md border border-brand-grey-dark/60 flex items-center justify-center text-brand-brown hover:text-brand-black hover:border-brand-black transition-colors"><Facebook size={16} /></a>
+          <a href="#instagram" aria-label="Instagram" class="w-9 h-9 rounded-md border border-brand-grey-dark/60 flex items-center justify-center text-brand-brown hover:text-brand-black hover:border-brand-black transition-colors"><Instagram size={16} /></a>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>What is a SubAgent?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">A SubAgent is a specialist AI worker assigned to a specific task or tool. Think of KlawAgent as the manager and SubAgents as the staff — one handles email, one monitors Slack, one updates your CRM. They work in parallel so multiple things get done simultaneously.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>What's included in the setup fee?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">The setup fee covers your VPS configuration, initial integrations, agent deployment, and your onboarding training session. It's a one-time cost to get everything running the right way from day one.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>How does Unified API billing work?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">KlawAgent gives you access to our unified API hub — covering AI models, search, and more. Social media tools are included at no extra usage cost. For all other services, we bill you at the provider's cost plus a small margin based on your plan. You only pay for what you actually use.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>Do I need technical knowledge?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">Not at all. We handle the setup, configuration, and maintenance. You just tell us what you need automated and we take care of the rest.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>Can I cancel anytime?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">Yes. There are no long-term contracts. You can cancel or change your plan at any time with 30 days notice.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q"><span>How long does setup take?</span><span class="faq-plus">+</span></button>
-        <div class="faq-a">Most clients are up and running within 3–5 business days after onboarding.</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- CONTACT -->
-<section class="s" id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div>
-        <h2 style="font-size:clamp(2rem,3.2vw,3.5rem);margin-bottom:24px">Get in touch</h2>
-        <p style="color:var(--muted);font-size:1.125rem;line-height:1.7;margin-bottom:40px;max-width:483px">Ready to get started or just have questions? Book a call, send us an email — we reply within one business day.</p>
-        <div class="c-rows">
-          <div class="c-row"><div class="c-ico">✉</div><div><div class="c-lbl">Email</div><div class="c-val">hey@klawagent.ai</div></div></div>
-          <div class="c-row"><div class="c-ico">📍</div><div><div class="c-lbl">Location</div><div class="c-val">Austin, Texas</div></div></div>
+      <div class="max-w-6xl mx-auto pt-8 mt-8 border-t border-brand-grey-dark/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px] text-brand-grey-mid">
+        <div>© {year} KlawAgent</div>
+        <div class="flex items-center gap-1.5">
+          <MapPin size={14} />
+          Built in Austin, TX
         </div>
       </div>
-      <div class="cal-box">
-        <div id="cal-embed" style="width:100%;min-height:500px"></div>
-      </div>
-    </div>
+    </footer>
+
   </div>
-</section>
 
-<script>
-  document.querySelectorAll('.faq-q').forEach(btn => {
-    btn.addEventListener('click', () => btn.closest('.faq-item')?.classList.toggle('open'));
-  });
-</script>
+  <script is:inline define:vars={{ WAITLIST_ENDPOINT }}>
+    (function () {
+      var form = document.getElementById('waitlist-form');
+      var input = document.getElementById('waitlist-email');
+      var hint = document.getElementById('waitlist-hint');
+      var formwrap = document.getElementById('waitlist-formwrap');
+      var success = document.getElementById('waitlist-success');
+      var successEmail = document.getElementById('waitlist-success-email');
+      var btn = document.getElementById('waitlist-btn');
+      var btnIcon = document.getElementById('waitlist-btn-icon');
+      if (!form) return;
 
-<script type="text/javascript">
-  (function (C, A, L) {
-    let p = function (a, ar) { a.q.push(ar); };
-    let d = C.document;
-    C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
-  Cal("init", "meeting", { origin: "https://cal.com" });
-  Cal.ns.meeting("inline", {
-    elementOrSelector: "#cal-embed",
-    calLink: "welcomein/meeting",
-    layout: "month_view",
-  });
-  Cal.ns.meeting("ui", {
-    styles: { branding: { brandColor: "#b91c1c" } },
-    hideEventTypeDetails: false,
-    layout: "month_view",
-  });
-</script>
+      var ARROW = btnIcon ? btnIcon.innerHTML : '';
+      var SPINNER = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+      var submitting = false;
 
-</Layout>
+      function setHintDefault() {
+        hint.innerHTML = '<span>Join the waitlist — be first in when we launch. No spam.</span>';
+        input.style.border = '1px solid rgba(123, 107, 88, 0.35)';
+      }
+      function setHintError(msg) {
+        hint.innerHTML = '<span class="text-brand-red font-medium">' + msg + '</span>';
+        input.style.border = '1px solid #C8392B';
+      }
+
+      input.addEventListener('input', function () { if (!submitting) setHintDefault(); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var value = (input.value || '').trim();
+        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        if (!valid) { setHintError('Please enter a valid email address.'); input.focus(); return; }
+
+        submitting = true;
+        btn.disabled = true;
+        if (btnIcon) btnIcon.innerHTML = SPINNER;
+
+        fetch(WAITLIST_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: value, source: 'klawagent.ai' })
+        })
+        .then(function (r) { if (!r.ok) throw new Error('request failed'); return r; })
+        .then(function () {
+          if (successEmail) successEmail.textContent = value;
+          formwrap.classList.add('hidden');
+          success.classList.remove('hidden');
+          success.classList.add('flex');
+        })
+        .catch(function () {
+          submitting = false;
+          btn.disabled = false;
+          if (btnIcon) btnIcon.innerHTML = ARROW;
+          setHintError('Something went wrong — please try again.');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
